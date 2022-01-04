@@ -7,8 +7,8 @@
         </Console>
 
         <RollingFile name="RollingFile"
-                     fileName="/home/log/${env:HOSTNAME}.log"
-                     filePattern="/home/log/traffic-app-%d{dd-MMMM-yyyy-HH}.log.gz">
+                     fileName="/home/log/traffic-app.log"
+                     filePattern="/alog/traffic-app-%d{dd-MMMM-yyyy-HH}.log.gz">
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %X{requestId} - $${env:HOSTNAME} - %msg%n</pattern>
             </PatternLayout>
@@ -19,16 +19,18 @@
     </Appenders>
 
     <Loggers>
-        <AsyncLogger name="com.zaxxer" level="DEBUG">
+        <AsyncLogger name="com.zaxxer" level="INFO">
             <AppenderRef ref="RollingFile" />
         </AsyncLogger>
 
         <!-- LOG everything at INFO level -->
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
         </Root>
 
-        <Logger name="com.interceptor.traffic" level="INFO"/>
+        <!-- LOG "com.baeldung*" at TRACE level -->
+        <Logger name="com.interceptor" level="info"/>
 
     </Loggers>
 
